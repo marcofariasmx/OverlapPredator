@@ -145,7 +145,7 @@ def main(config, demo_loader):
     config.model.eval()
     c_loader_iter = demo_loader.__iter__()
     with torch.no_grad():
-        inputs = c_loader_iter.next()
+        inputs = next(c_loader_iter)
         ##################################
         # load inputs to device.
         for k, v in inputs.items():  
@@ -198,6 +198,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     config = load_config(args.config)
     config = edict(config)
+    config.gpu_mode = False
     if config.gpu_mode:
         config.device = torch.device('cuda')
     else:
@@ -235,9 +236,8 @@ if __name__ == '__main__':
                                         num_workers=1,
                                         neighborhood_limits=neighborhood_limits)
 
-    # load pretrained weights
-    assert config.pretrain != None
-    state = torch.load(config.pretrain)
+    assert config.pretrain is not None
+    state = torch.load(config.pretrain, map_location=config.device)  # Load state dict to the specified device
     config.model.load_state_dict(state['state_dict'])
 
     # do pose estimation
