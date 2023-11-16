@@ -1,7 +1,7 @@
 misc:
   exp_dir: indoor
   mode: test
-  gpu_mode: False
+  gpu_mode: True
   verbose: True
   verbose_freq: 1000
   snapshot_freq: 1
@@ -70,7 +70,7 @@ dataset:
   val_info: configs/indoor/val_info.pkl
 
 demo:
-  src_pcd: assets/cloud_bin_21.pth
-  tgt_pcd: assets/cloud_bin_34.pth
-  n_points: 1000
+  src_pcd: assets/DockEngine_100pct_4mm_condition_scan.laz
+  tgt_pcd: assets/FreezerPt2_100pct_4mm_condition_scan.laz
+  n_points: 5000
 
